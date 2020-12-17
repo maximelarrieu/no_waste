@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Accueil{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col col-sm-12 col-md-4 col-lg-4 border mr-4 border radius">
+            <h1>CATÉGORIES</h1>
+            This friendly message is coming from:
+        </div>
+
+        <div class="col col-sm-12 col-md-8 col-lg-7 border radius">
+            <ul>
+                <li>Your controller at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
+                <li>Your template at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
