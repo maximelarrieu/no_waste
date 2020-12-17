@@ -1,0 +1,14 @@
+body {
+    background-color: white;
+}
+
+#mainwrapper {
+    margin-top: 1%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+}
+
+.radius {
+    border-radius: 5px;
+}
