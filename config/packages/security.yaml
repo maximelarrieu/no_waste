@@ -4,7 +4,10 @@ security:
         App\Entity\User:
             algorithm: auto
     providers:
-        users_in_memory: { memory: null }
+        db_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -12,7 +15,14 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
+            provider: db_provider
+            guard:
+                authenticators:
+                    - App\Security\Authenticator
+            logout:
+                path: logout
+                # where to redirect after logout
+                target: home
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
