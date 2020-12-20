@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Commerces{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("build/business-card.css") }}"/>
+
+{% endblock %}
+
+{% block body %}
+    <h2>COMMERCES</h2>
+    <div class="row border p-2">
+        {% for b in business %}
+        <div class="col col-12 col-sm-12 col-md-12 col-lg-4">
+            <div class="business-card radius mb-4">
+                <div class="row">
+                    <div class="infos col col-4 col-sm-4 col-md-4 col-lg-4">
+                        <p>{{ b.name }}</p>
+                    </div>
+                    <div class="test col col-8 col-sm-8 col-md-8 col-lg-8">
+                        <p>{{ b.description }}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
