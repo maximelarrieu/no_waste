@@ -23,7 +23,6 @@ class CommodityFixtures extends Fixture
             $this->addReference('commodity'.$c, $commodity);
             $manager->persist($commodity);
         }
-
         $manager->flush();
     }
 }
