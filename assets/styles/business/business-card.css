@@ -1,0 +1,8 @@
+.business-card {
+    min-height: 100%;
+    max-height: 100%;
+    background-color: gray;
+}
+.test {
+    max-height: 100%;
+}
