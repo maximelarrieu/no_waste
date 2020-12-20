@@ -20,4 +20,13 @@ class BusinessController extends AbstractController
             'business' => $business,
         ]);
     }
+
+    /**
+     * @Route("/business/{id}", name="business_detail")
+     */
+    public function details(Business $business): Response {
+        return $this->render('business/details.html.twig', [
+            'business' => $business
+        ]);
+    }
 }
