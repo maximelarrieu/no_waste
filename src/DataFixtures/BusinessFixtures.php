@@ -21,14 +21,13 @@ class BusinessFixtures extends Fixture implements DependentFixtureInterface
             $business->setName($faker->company);
             $business->setAddress($faker->address);
             $business->setDescription($faker->text);
-            $business->setPhoneNumber('0500000000');
+            $business->setPhoneNumber('05 00 00 00 00');
             $business->setUser($this->getReference('user'.random_int(0, UserFixtures::USER_COUNT - 1)));
             for($c = 0; $c < random_int(0, 6); $c++) {
                 $business->addCommodity($this->getReference('commodity'.random_int(0, CommodityFixtures::COMMODITY_COUNT -1)));
             }
             $manager->persist($business);
         }
-
         $manager->flush();
 
     }
