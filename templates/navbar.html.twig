@@ -24,7 +24,13 @@
                         {{ user.firstname }} {{ user.lastname }}
                     </a>
                     <div class="dropdown-menu bg-secondary mr-4" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Profil</a>
+                        <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
+                        {% if user.business != null %}
+                        <a href="{{ path('business_detail', {id: user.business.id}) }}" class="dropdown-item">Mon commerce</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <a class="dropdown-item" href="{{ path('admin') }}">Administration</a>
+                        {% endif %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ path('logout') }}">Déconnexion</a>
                     </div>
