@@ -4,27 +4,24 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset("build/business-card.css") }}"/>
-
 {% endblock %}
 
 {% block body %}
-    <h2>COMMERCES</h2>
-    <div class="row border p-2">
-        {% for b in business %}
-        <div class="col col-12 col-sm-12 col-md-12 col-lg-4">
-            <div class="business-card radius mb-4">
-                <div class="row">
-                    <div class="infos col col-4 col-sm-4 col-md-4 col-lg-4">
-                        <p>{{ b.name }}</p>
-                    </div>
-                    <div class="test col col-8 col-sm-8 col-md-8 col-lg-8">
-                        <p>{{ b.description }}</p>
-
+    <div class="pt-4">
+{#        <h2>COMMERCES</h2>#}
+        <section class="row">
+            {% for b in business %}
+                <div class="col col-12 col-sm-12 col-md-12 col-lg-4">
+                    <div class="card radius mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/150" height="200px" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ b.name }}</h5>
+                            <p class="card-text">{{ b.description }}</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        </section>
     </div>
 {% endblock %}

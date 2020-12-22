@@ -45,14 +45,19 @@ class Business
     private $phone_number;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="business", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="business", cascade={"persist"})
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Commodity::class, mappedBy="business")
+     * @ORM\ManyToMany(targetEntity=Commodity::class, mappedBy="business", cascade={"persist", "remove"})
      */
     private $commodities;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -159,6 +164,18 @@ class Business
         if ($this->commodities->removeElement($commodity)) {
             $commodity->removeBusiness($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

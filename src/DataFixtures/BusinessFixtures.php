@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Business;
+use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -14,11 +15,14 @@ class BusinessFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
+        $slugify = new Slugify();
+
         $faker = Factory::create('fr_FR');
 
         for($b = 0; $b < self::BUSINESS_COUNT; $b++) {
             $business = new Business();
             $business->setName($faker->company);
+            $business->setSlug($slugify->slugify($faker->company));
             $business->setAddress($faker->address);
             $business->setDescription($faker->text);
             $business->setPhoneNumber('05 00 00 00 00');
