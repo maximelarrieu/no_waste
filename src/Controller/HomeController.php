@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BusinessRepository;
 use App\Repository\CommodityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +13,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(CommodityRepository $commodityRepository): Response
+    public function index(CommodityRepository $commodityRepository, BusinessRepository $businessRepository): Response
     {
         $commodities = $commodityRepository->findAll();
         return $this->render('home/index.html.twig', [
-            'commodities' => $commodities
+            'commodities' => $commodities,
+//            'business' => $business = null
         ]);
     }
 
