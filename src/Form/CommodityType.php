@@ -23,7 +23,8 @@ class CommodityType extends AbstractType
                 'label' => "Description :"
             ])
             ->add('image', TextType::class, [
-                'label' => "Image :"
+                'label' => "Image :",
+                'required' => false
             ])
             ->add('price', MoneyType::class, [
                 'label' => "Prix du prduit :"

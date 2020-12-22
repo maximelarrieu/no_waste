@@ -10,7 +10,7 @@
                             <p class="card-text">{{ commodity.description }}</p>
                             {% for business in commodity.business %}
                             {% if app.user == business.user %}
-                            <a href="{{ path('commodity_remove', {id: commodity.id}) }}" class="btn btn-danger"><i class="fas fa-trash mr-2"></i>Modifier</a>
+                            <a href="{{ path('commodity_edit', {slug: business.slug, id: commodity.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Modifier</a>
                             <a href="{{ path('commodity_remove', {id: commodity.id}) }}" class="btn btn-danger"><i class="fas fa-trash mr-2"></i>Supprimer</a>
                             {% endif %}
                             {% endfor %}

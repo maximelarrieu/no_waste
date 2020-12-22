@@ -21,7 +21,8 @@ class BusinessFormType extends AbstractType
                 'label' => "Description :"
             ])
             ->add('image', TextType::class, [
-                'label' => "Image :"
+                'label' => "Image :",
+                'required' => false,
             ])
             ->add('address', TextType::class, [
                 'label' => "Adresse postale :",
