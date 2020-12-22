@@ -1,0 +1,21 @@
+
+    <h3 class="">DENRÉES</h3>
+    <div class="row">
+            {% for commodity in commodities %}
+                <div class="col col-12 col-sm-12 col-md-12 col-lg-4">
+                    <div class="card mb-4">
+                        <img class="card-img-top" src="https://via.placeholder.com/150" height="200px" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ commodity.title }}</h5>
+                            <p class="card-text">{{ commodity.description }}</p>
+                            {% for business in commodity.business %}
+                            {% if app.user == business.user %}
+                            <a href="{{ path('commodity_edit', {slug: business.slug, id: commodity.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Modifier</a>
+                            <a href="{{ path('commodity_remove', {id: commodity.id}) }}" class="btn btn-danger"><i class="fas fa-trash mr-2"></i>Supprimer</a>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+    </div>

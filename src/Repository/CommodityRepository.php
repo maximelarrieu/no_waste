@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Business;
 use App\Entity\Commodity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,12 @@ class CommodityRepository extends ServiceEntityRepository
         parent::__construct($registry, Commodity::class);
     }
 
-    // /**
-    //  * @return Commodity[] Returns an array of Commodity objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+    public function getCommoditiesByBusiness(Business $business) {
+        return $this->createQueryBuilder('commodity')
+            ->innerJoin('commodity.business', 'business')
+            ->where('business = :business')
+            ->setParameter('business', $business)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Commodity
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

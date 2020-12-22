@@ -13,9 +13,20 @@
 
     {{ render(controller('App\\Controller\\HomeController::navbar', {} )) }}
 
-    <div id="mainwrapper">
-    {% block body %}
-    {% endblock %}
+
+    <div class="row m-4">
+        <div class="col col-sm-12 col-md-5 col-lg-3 border radius" style="height: 100%">
+            <h2 class="my-3">COMMERCES</h2>
+            <ul class="list-group">
+                {% for b in business_repo.findAll() %}
+                    <a href="{{ path('business_detail', {id: b.id}) }}"><li class="list-group-item mb-3">{{ b.name }}</li></a>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col col-sm-12 col-md-7 col-lg-9 border radius">
+            {% block body %}
+            {% endblock %}
+        </div>
     </div>
 
     {% block javascripts %}
