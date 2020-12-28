@@ -9,7 +9,7 @@
     <section class="row my-4 mb-3">
         <div class="col col-4 col-sm-5 col-md-3 col-lg-3">
             <img class="img-fluid"
-                 src="http://placehold.it/300x300"
+                 src="{{ user.avatar ? vich_uploader_asset(user, 'avatarFile') : 'http://placehold.it/300x300' }}"
                  alt="Avatar">
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-danger mt-2" href="{{ path('admin') }}"><i class="fas fa-user mr-2"></i>Administration</a>
@@ -19,7 +19,9 @@
             <h2>{{ user.firstname }} {{ user.lastname }}</h2>
             <p>{{ user.email }}</p>
             {% if is_current_user %}
-                <a class="btn btn-sm btn-danger" href="{{ path('logout') }}"><i
+                <a class="btn btn-warning" href="{{ path('user_edit', {id: user.id}) }}"><i class="fas fa-pencil mr-2"></i>Editez votre profil</a>
+                <br>
+                <a class="btn btn-sm btn-danger mt-2" href="{{ path('logout') }}"><i
                             class="fas fa-power-off mr-2"></i>Déconnexion</a>
             {% endif %}
         </div>
@@ -28,16 +30,16 @@
             <h4 class="mt-4">{% if is_current_user %}MON COMMERCE{% else %}COMMERCE{% endif %}</h4>
             <div style="width: 100%">
                 <div class="card w-100 radius">
-                    <img class="card-img-top" src="http://placehold.it/300x100" alt="Commerce image" >
+                    <img class="card-img-top" src="{{ business.image ? vich_uploader_asset(business, 'imageFile') : 'http://placehold.it/300x100' }}" alt="Commerce image" style="width: 100%; height: 150px">
                     <div class="card-body">
                         <h5 class="card-title">{{ business.name }}</h5>
                         <i>{{ business.address }}<br /></i>
                         <i>{{ business.phoneNumber }}</i>
                         <p class="card-text mt-2">{{ business.description }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary mr-2"><i class="fas fa-list mr-2"></i>Voir les denrées</a>
+                            <a class="btn btn-primary mr-2" href="{{ path('business_detail', {id: business.id}) }}"><i class="fas fa-list mr-2"></i>Voir les produits </a>
                             {% if is_current_user %}
-                                <a href="{{ path('business_detail', {id: business.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Gestion du commerce</a>
+                                <a href="{{ path('business_edit', {id: business.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Gestion du commerce</a>
                             {% endif %}
                         </div>
                     </div>
