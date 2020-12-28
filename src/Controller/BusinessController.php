@@ -36,7 +36,6 @@ class BusinessController extends AbstractController
 
         $slugify = new Slugify();
 
-
         if($business === null) {
             $business = new Business();
         }

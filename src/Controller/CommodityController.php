@@ -28,9 +28,9 @@ class CommodityController extends AbstractController
     /**
      * @Route("business/{slug}/commodity/add", name="commodity_add")
      * @Route("business/{slug}/commodity/edit/{id}", name="commodity_edit")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and (commodity == null or commodity.getBusiness().getUser() == user)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function commodityForm(Request $request, EntityManagerInterface $manager, Business $business, Commodity $commodity = null): Response {
+    public function commodityForm(Request $request, EntityManagerInterface $manager, Business $business = null, Commodity $commodity = null): Response {
         if($commodity === null) {
             $commodity = new Commodity();
         }
@@ -57,12 +57,14 @@ class CommodityController extends AbstractController
 
     /**
      * @Route("commodity/remove/{id}", name="commodity_remove")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY') and (commodity == null or commodity.getBusiness().getUser() == user)")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function remove(Commodity $commodity, EntityManagerInterface $manager): Response {
         $manager->remove($commodity);
         $manager->flush();
 
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('business_details', [
+            'id' => $commodity->getBusiness()
+        ]);
     }
 }
