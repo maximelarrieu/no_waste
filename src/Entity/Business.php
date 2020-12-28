@@ -6,11 +6,16 @@ use App\Repository\BusinessRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Monolog\DateTimeImmutable;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Exception;
 
 /**
  * @ORM\Entity(repositoryClass=BusinessRepository::class)
+ * @Vich\Uploadable()
  */
-class Business
+class Business implements \Serializable
 {
     /**
      * @ORM\Id
@@ -31,8 +36,15 @@ class Business
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg"})
      */
     private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="business_image", fileNameProperty="image")
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg"}, maxSize="2M")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=60)
@@ -58,6 +70,11 @@ class Business
      * @ORM\Column(type="string", length=50)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -101,6 +118,27 @@ class Business
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageFile() {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param mixed $imageFile
+     * @return Business
+     */
+    public function setImageFile($imageFile) {
+        $this->imageFile = $imageFile;
+
+        if($imageFile != null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
 
         return $this;
     }
@@ -176,6 +214,32 @@ class Business
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            'id' => $this->id,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            ) = array_values(unserialize($serialized));
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
