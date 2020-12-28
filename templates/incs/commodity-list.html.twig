@@ -4,10 +4,12 @@
             {% for commodity in commodities %}
                 <div class="col col-12 col-sm-12 col-md-12 col-lg-4">
                     <div class="card mb-4">
-                        <img class="card-img-top" src="https://via.placeholder.com/150" height="200px" alt="Card image cap">
+                        <img class="card-img-top" src="{{ commodity.image ? vich_uploader_asset(commodity, 'imageFile') : 'http://placehold.it/300x100' }}" height="200px" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">{{ commodity.title }}</h5>
+                            <h5 class="card-title">{{ commodity.title }} <span class="badge badge-primary">{{ commodity.price|number_format(2) }} €</span></h5>
+                            <i>Restants : {{ commodity.remaining }}</i>
                             <p class="card-text">{{ commodity.description }}</p>
+                            <a href="#" class="btn btn-outline-success"><i class="fas fa-cart-arrow-down mr-2"></i>Ajouter au panier</a>
                             {% for business in commodity.business %}
                             {% if app.user == business.user %}
                             <a href="{{ path('commodity_edit', {slug: business.slug, id: commodity.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Modifier</a>
