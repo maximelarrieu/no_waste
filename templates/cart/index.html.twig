@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Mon panier{% endblock %}
+
+{% block body %}
+<h3 class="p-3">MON PANIER</h3>
+<div class="container">
+    {% for commodity in commodities %}
+        <div class="row border">
+            <div class="col col-3 col-sm-3 col-md-3 col-lg-3 p-2">
+                <img class="" src="{{ commodity.image ? vich_uploader_asset(commodity, 'imageFile') : 'http://placehold.it/100x100' }}" alt="Commodity image" style="width: 100%; height: 150px">
+            </div>
+            <div class="col col-9 col-sm-8 col-md-9 col-lg-6 p-2"><p>{{ commodity.title }}</p><p>{{ commodity.description }}</p></div>
+            <div class="col col-0 col-sm-1 col-md-0 col-lg-3 p-2"><span class="badge badge-primary">{{ commodity.price }} €</span></div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
