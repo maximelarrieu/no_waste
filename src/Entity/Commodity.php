@@ -65,9 +65,15 @@ class Commodity implements \Serializable
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Cart::class, mappedBy="commodity")
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->business = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -202,6 +208,33 @@ class Commodity implements \Serializable
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->addCommodity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            $cart->removeCommodity($this);
+        }
 
         return $this;
     }
