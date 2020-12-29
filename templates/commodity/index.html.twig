@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CommodityController!{% endblock %}
+{% block title %}{{ parent() }} {{ commodity.title }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/src/Controller/CommodityController.php'|file_link(0) }}">src/Controller/CommodityController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/templates/commodity/index.html.twig'|file_link(0) }}">templates/commodity/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="container p-4">
+        <img class="card-img-top" src="{{ commodity.image ? vich_uploader_asset(commodity, 'imageFile') : 'http://placehold.it/300x100' }}" height="200px" alt="Card image cap">
+        <h3>{{ commodity.title }} <span class="badge badge-primary">{{ commodity.price|number_format(2) }} €</span></h3>
+        <p class="font-italic">Restants : {{ commodity.remaining }}</p>
+        <p>{{ commodity.description }}</p>
+        {% if app.user %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-outline-success"><i class="fas fa-cart-arrow-down mr-2"></i>Ajouter au panier</button>
+            {{ form_end(form) }}
+        {% else %}
+            <a href="{{ path('login') }}" class="btn btn-secondary">Connectez-vous pour acheter ce produit à votre panier</a>
+        {% endif %}
+    </div>
 {% endblock %}
