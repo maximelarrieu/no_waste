@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Business;
+use App\Entity\Cart;
 use App\Entity\Commodity;
+use App\Form\BuyCommodityType;
 use App\Form\CommodityType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +18,45 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CommodityController extends AbstractController
 {
     /**
-     * @Route("/commodity", name="commodity")
+     * @Route("/commodity/{id}", name="commodity")
+     * @param Commodity $commodity
+     * @return Response
      */
-    public function index(): Response
+    public function index(Commodity $commodity, Request $request, EntityManagerInterface $manager): Response
     {
+        $cart = $this->getUser()->getCart();
+
+        $commodityForm = $this->createForm(BuyCommodityType::class, $commodity);
+        $commodityForm->handleRequest($request);
+
+        if($commodityForm->isSubmitted() && $commodityForm->isValid()) {
+            $cart->addCommodity($commodity);
+            $manager->persist($commodity);
+            $manager->flush();
+            return $this->redirectToRoute('cart', [
+                'id' => $cart->getId()
+            ]);
+        }
+
         return $this->render('commodity/index.html.twig', [
-            'controller_name' => 'CommodityController',
+            'commodity' => $commodity,
+            'form' => $commodityForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/commodity/{id}/add", name="add_to_cart")
+     */
+    public function addToCart(Commodity $commodity) {
+        $user = $this->getUser();
+        $cart = $user->getCart();
+
+        $cart->addCommodity($commodity);
+
+        return $this->redirectToRoute('cart', [
+            'id' => $cart->getId()
+        ]);
+
     }
 
     /**
