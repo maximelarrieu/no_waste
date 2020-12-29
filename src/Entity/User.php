@@ -74,6 +74,11 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface, \Seri
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Cart::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $cart;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -253,5 +258,17 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface, \Seri
             $this->email,
             $this->password
             ) = array_values(unserialize($serialized));
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): self
+    {
+        $this->cart = $cart;
+
+        return $this;
     }
 }
