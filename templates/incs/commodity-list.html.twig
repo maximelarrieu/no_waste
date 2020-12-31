@@ -16,6 +16,12 @@
                             {% else %}
                                 <button class="btn btn-outline-warning"><i class="fas fa-warning mr-2"></i>Produit indisponible</button>
                             {% endif %}
+                            {% if app.user %}
+                                <a href="{{ path('cart_add', {'id': commodity.id}) }}" class="btn btn-success float-right">
+                                    <i class="fas fa-shopping-cart mr-1"></i>
+                                         Ajouter
+                                </a>
+                            {% endif %}
                             {% for business in commodity.business %}
                             {% if app.user == business.user %}
                             <a href="{{ path('commodity_edit', {slug: business.slug, id: commodity.id}) }}" class="btn btn-warning"><i class="fas fa-pencil mr-2"></i>Modifier</a>

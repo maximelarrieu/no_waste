@@ -24,19 +24,9 @@ class CommodityController extends AbstractController
      */
     public function index(Commodity $commodity, Request $request, EntityManagerInterface $manager): Response
     {
-        $cart = $this->getUser()->getCart();
 
         $commodityForm = $this->createForm(BuyCommodityType::class, $commodity);
         $commodityForm->handleRequest($request);
-
-        if($commodityForm->isSubmitted() && $commodityForm->isValid()) {
-            $cart->addCommodity($commodity);
-            $manager->persist($commodity);
-            $manager->flush();
-            return $this->redirectToRoute('cart', [
-                'id' => $cart->getId()
-            ]);
-        }
 
         return $this->render('commodity/index.html.twig', [
             'commodity' => $commodity,

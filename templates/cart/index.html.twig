@@ -1,18 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} Mon panier{% endblock %}
+{% block title %}Hello CartController!
+{% endblock %}
 
 {% block body %}
-<h3 class="p-3">MON PANIER</h3>
-<div class="container">
-    {% for commodity in commodities %}
-        <div class="row border">
-            <div class="col col-3 col-sm-3 col-md-3 col-lg-3 p-2">
-                <img class="" src="{{ commodity.image ? vich_uploader_asset(commodity, 'imageFile') : 'http://placehold.it/100x100' }}" alt="Commodity image" style="width: 100%; height: 150px">
-            </div>
-            <div class="col col-9 col-sm-8 col-md-9 col-lg-6 p-2"><p>{{ commodity.title }}</p><p>{{ commodity.description }}</p></div>
-            <div class="col col-0 col-sm-1 col-md-0 col-lg-3 p-2"><span class="badge badge-primary">{{ commodity.price }} €</span></div>
-        </div>
-    {% endfor %}
-</div>
+    <div class="bg-light p-3">
+        <h1>Votre panier</h1>
+    </div>
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{item.commodity.title}}</td>
+                        <td>{{item.commodity.price}}€</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.commodity.price * item.quantity}}€</td>
+                        <td><a class="btn btn-outline-success" href="{{ path('commodity', {id: item.commodity.id}) }}">
+                                    <i class="fas fa-eye mr-2"></i>Voir le produit
+                                </a></td>
+                        <td><a href="{{ path('cart_remove', {id: item.commodity.id}) }}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right">Total de votre Panier : </td>
+                    <td>{{ total }}€</td>
+                    {% if app.user %}
+                        {% if total >= (app.user.balance + 1) %}
+                            <td>Attention, vous n'avez pas assez de sous sur votre compte...</td>                        
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p class="text-center">Oops, votre panier semble vide...</p>
+        <p class="text-center">Cliquez <a href="{{ path('home') }}">ici</a> pour voir la liste des produits disponibles</a>
+                                   
+    {% endif %}
+    
 {% endblock %}

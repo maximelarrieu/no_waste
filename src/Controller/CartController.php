@@ -2,25 +2,76 @@
 
 namespace App\Controller;
 
-use App\Entity\Cart;
+use App\Repository\CommodityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
     /**
-     * @Route("/cart/{id}", name="cart")
+     * @Route("/cart", name="cart_index")
      */
-    public function index(Cart $cart): Response
+    public function index(SessionInterface $session, CommodityRepository $commodityRepository)
     {
-        $user = $this->getUser();
+        $cart = $cart = $session->get('cart', []);
 
+        $cartWithData = [];
 
+        foreach($cart as $id => $quantity) {
+            $cartWithData[] = [
+                'commodity' => $commodityRepository->find($id),
+                'quantity' => $quantity
+            ];
+        }
+
+        $total = 0;
+
+        foreach ($cartWithData as $item) {
+            $totalItem = $item['commodity']->getPrice() * $item['quantity'];
+            $total += $totalItem;
+        }
 
         return $this->render('cart/index.html.twig', [
-            'user' => $this->getUser(),
-            'commodities' => $cart->getCommodity()
+            'items' => $cartWithData,
+            'total' => $total
         ]);
+    }
+
+    //Méthode d'ajout d'article(s) au panier (cart=panier).
+    /**
+     * @Route("/cart/add/{id}", name="cart_add")
+     */
+    public function add($id, SessionInterface $session) 
+    {
+        $cart = $session->get('cart', []);
+
+        if(!empty($cart[$id])) {
+            $cart[$id]++;
+        }else {
+            $cart[$id] = 1;
+        }
+
+        $session->set('cart', $cart);
+
+       return $this->redirectToRoute("cart_index");
+    }
+
+    //Méthode de suppression d'article au panier (cart=panier).
+    /**
+     * @Route("/cart/remove/{id}", name="cart_remove")
+     */
+    public function remove($id, SessionInterface $session) 
+    {
+        $cart = $session->get('cart', []);
+
+        if($cart[$id] >= 2) {
+            $cart[$id]--;
+        }else {
+            unset($cart[$id]);
+        }
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute("cart_index");
     }
 }

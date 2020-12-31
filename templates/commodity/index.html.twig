@@ -9,12 +9,12 @@
         <p class="font-italic">Restants : {{ commodity.remaining }}</p>
         <p>{{ commodity.description }}</p>
         {% if app.user %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-outline-success"><i class="fas fa-cart-arrow-down mr-2"></i>Ajouter au panier</button>
-            {{ form_end(form) }}
+            <a href="{{ path('cart_add', {'id': commodity.id}) }}" class="btn btn-success float-right">
+                <i class="fas fa-shopping-cart mr-1"></i>
+                     Ajouter
+            </a>
         {% else %}
-            <a href="{{ path('login') }}" class="btn btn-secondary">Connectez-vous pour acheter ce produit à votre panier</a>
+            <a href="{{ path('login') }}" class="btn btn-secondary">Connectez-vous pour ajouter ce produit à votre panier</a>
         {% endif %}
     </div>
 {% endblock %}
