@@ -4,11 +4,15 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @Vich\Uploadable()
  */
-class User implements \Symfony\Component\Security\Core\User\UserInterface
+class User implements \Symfony\Component\Security\Core\User\UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -39,8 +43,16 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg"})
      */
     private $avatar;
+
+    /**
+     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatar")
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg"}, maxSize="2M")
+     */
+    private $avatarFile;
+
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -56,6 +68,16 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
      * @ORM\OneToOne(targetEntity=Business::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $business;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Cart::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $cart;
 
     public function getId(): ?int
     {
@@ -122,6 +144,27 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAvatarFile() {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param mixed $avatarFile
+     * @return User
+     */
+    public function setAvatarFile($avatarFile) {
+        $this->avatarFile = $avatarFile;
+
+        if($avatarFile != null) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
     public function getBalance(): ?int
     {
         return $this->balance;
@@ -183,6 +226,48 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface
         }
 
         $this->business = $business;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password
+            ) = array_values(unserialize($serialized));
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): self
+    {
+        $this->cart = $cart;
 
         return $this;
     }

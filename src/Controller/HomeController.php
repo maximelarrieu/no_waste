@@ -18,7 +18,6 @@ class HomeController extends AbstractController
         $commodities = $commodityRepository->findAll();
         return $this->render('home/index.html.twig', [
             'commodities' => $commodities,
-//            'business' => $business = null
         ]);
     }
 

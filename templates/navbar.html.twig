@@ -19,6 +19,10 @@
         </ul>
         <ul class="navbar-nav mr-4">
             {% if app.user %}
+                <li class="nav-item">
+                        <a class="btn btn-light" href="{{ path('cart_index') }}">Panier<i class="fas fa-shopping-cart mr-1"></i></a>
+                    </li>
+                <li class="nav-link"><span class="badge badge-warning">{{ user.balance|number_format(2) }} €</span></li>
             <li class="nav-item dropdown mr-4">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ user.firstname }} {{ user.lastname }}

@@ -2,29 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Commodity;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class CommodityType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, [
-                'label' => "Titre du produit :"
+            ->add('firstname', TextType::class, [
+                'label' => 'Prénom :'
             ])
-            ->add('description', TextareaType::class, [
-                'label' => "Description :"
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom :'
             ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => "Image :",
+            ->add('email', TextType::class, [
+                'label' => 'Email :'
+            ])
+            ->add('avatarFile', VichImageType::class, [
+                'label' => 'Image de profil :',
                 'required' => false,
                 'allow_delete' => true,
                 'delete_label' => "Supprimer l'image",
@@ -33,19 +33,13 @@ class CommodityType extends AbstractType
                 'image_uri' => true,
                 'asset_helper' => true,
             ])
-            ->add('price', MoneyType::class, [
-                'label' => "Prix du prduit :"
-            ])
-            ->add('remaining', IntegerType::class, [
-                'label' => "Stock :"
-            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Commodity::class,
+            'data_class' => User::class,
         ]);
     }
 }

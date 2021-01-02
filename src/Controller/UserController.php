@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserController extends AbstractController
 {
@@ -26,6 +31,29 @@ class UserController extends AbstractController
             'user' => $user,
             'business' => $business,
             'controller_name' => 'UserController',
+        ]);
+    }
+
+    /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/profile/update", name="user_edit")
+     */
+    public function edit(Request $request, EntityManagerInterface $manager) {
+
+        /** @var UserInterface $user */
+        $user = $this->getUser();
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
+
+        if($userForm->isSubmitted() && $userForm->isValid()) {
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profile');
+        }
+
+        return $this->render('user/form.html.twig', [
+            'form' => $userForm->createView(),
+            'user' => $user
         ]);
     }
 }
