@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4.9",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^4.0",
@@ -56,6 +56,9 @@
         "symfony/web-profiler-bundle": "^5.2"
     },
     "config": {
+        "platform": {
+            "php": "7.4.9"
+          },
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
