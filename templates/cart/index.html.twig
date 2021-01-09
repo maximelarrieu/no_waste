@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!
-{% endblock %}
+
 
 {% block body %}
     <div class="bg-light p-3">
@@ -44,10 +43,17 @@
                 </tr>
             </tfoot>
         </table>
+        <p class="text-right">
+            <a class="btn btn-outline-success" href="{{ path('purchase_buy', {id: app.user.id}) }}">
+                Acheter
+                
+            </a>
+        </p>
     {% else %}
         <p class="text-center">Oops, votre panier semble vide...</p>
-        <p class="text-center">Cliquez <a href="{{ path('home') }}">ici</a> pour voir la liste des produits disponibles</a>
-                                   
+        <p class="text-center">Cliquez <a href="{{ path('home') }}">ici</a> pour voir la liste des produits disponibles</a>                   
     {% endif %}
+
+
     
 {% endblock %}

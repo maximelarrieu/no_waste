@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="align-center">
+        <h1>Désolé vous n'avez pas assez sur votre compte {{ app.user.firstname }}..</h1>
+        <h2>le solde de votre compte est de {{ app.user.balance }} euros.</h2>
+    </div>
+{% endblock %}
