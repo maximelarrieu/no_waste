@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }} Erreur de panier{% endblock %}
 
 {% block body %}
-<div class="align-center">
+<div class="container">
         <h1>Désolé vous n'avez pas assez sur votre compte {{ app.user.firstname }}..</h1>
-        <h2>le solde de votre compte est de {{ app.user.balance }} euros.</h2>
+        <h2>Le solde de votre compte est de {{ app.user.balance|number_format(2) }}€.</h2>
     </div>
 {% endblock %}
