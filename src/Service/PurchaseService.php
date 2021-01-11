@@ -41,7 +41,7 @@ class PurchaseService
         
         if ($soldeActuel>$total) {
         
-            $user->setBalance($soldeActuel-$total);   
+            $user->setBalance($soldeActuel-floatval($total));
              
             $this->em->persist($user);
 

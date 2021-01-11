@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\CommodityRepository;
+use Symfony\Component\Form\Exception\OutOfBoundsException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
@@ -63,13 +64,13 @@ class CartService
 
     public function total(): float
     {
-        $total = 0;
+        $total = 0.00;
 
         foreach ($this->entireCart() as $item) {
-            $total += $item['commodity']->getPrice() * $item['quantity'];
+            floatval($total += $item['commodity']->getPrice() * $item['quantity']);
         }
 
-        return $total;
+        return floatval($total);
     }
 
     public function removeAll()
