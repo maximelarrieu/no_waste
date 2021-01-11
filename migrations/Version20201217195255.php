@@ -25,7 +25,7 @@ final class Version20201217195255 extends AbstractMigration
         $this->addSql('ALTER TABLE commodity_business ADD CONSTRAINT FK_744F2BCEA89DB457 FOREIGN KEY (business_id) REFERENCES business (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE commodity DROP FOREIGN KEY FK_5E8D2F74A89DB457');
         $this->addSql('DROP INDEX IDX_5E8D2F74A89DB457 ON commodity');
-        $this->addSql('ALTER TABLE commodity DROP business_id, CHANGE title title VARCHAR(50) DEFAULT NULL, CHANGE description description LONGTEXT DEFAULT NULL, CHANGE price price DOUBLE PRECISION NOT NULL');
+        $this->addSql('ALTER TABLE commodity DROP business_id, CHANGE title title VARCHAR(50) DEFAULT NULL, CHANGE description description LONGTEXT DEFAULT NULL, CHANGE price price FLOAT NOT NULL');
     }
 
     public function down(Schema $schema) : void
