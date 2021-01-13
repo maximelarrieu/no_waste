@@ -55,7 +55,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface, \Seri
 
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $balance;
 
@@ -165,12 +165,12 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface, \Seri
         return $this;
     }
 
-    public function getBalance(): ?int
+    public function getBalance(): ?float
     {
         return $this->balance;
     }
 
-    public function setBalance(?int $balance): self
+    public function setBalance(?float $balance): self
     {
         $this->balance = $balance;
 
