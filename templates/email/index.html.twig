@@ -1,0 +1,37 @@
+{% block body %}
+    <div class="bg-light p-3">
+        <h1>Merci pour votre commande {{app.user.firstname}}</h1>
+    </div>
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{item.commodity.title}}</td>
+                        <td>{{item.commodity.price}}€</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.commodity.price * item.quantity}}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right">Total de votre Panier : </td>
+                    <td>{{ total }}€</td>
+                </tr>
+            </tfoot>
+        </table>                   
+    {% endif %}
+
+
+    
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Service\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 
 
+
 class PurchaseService 
 {
     protected $cartService;
@@ -15,19 +16,19 @@ class PurchaseService
 
     protected $em;
 
-    public function __construct(UserRepository $userRepository, CartService $cartService, EntityManagerInterface $em)
+    protected $mailer;
+
+    public function __construct(UserRepository $userRepository, CartService $cartService, EntityManagerInterface $em, \Swift_Mailer $mailer)
     {
         $this->userRepository = $userRepository;
         
         $this->cartService = $cartService;
 
         $this->em = $em;
+
+        $this->mailer = $mailer;
     }
     
-    public function errorBuy()
-    {
-        
-    }
 
     public function BuyConfirm($id)
     {
@@ -46,8 +47,6 @@ class PurchaseService
             $this->em->persist($user);
 
             $this->em->flush();
-        
-            $this->cartService->removeAll();
 
             $reponse = 1;
         
