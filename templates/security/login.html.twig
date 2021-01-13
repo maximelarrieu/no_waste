@@ -15,7 +15,7 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">CONNEXION</h1>
-    <p class="font-italic">Vous n'avez pas de compte ? <a href="">Inscrivez-vous</a> dès maintenant.</p>
+    <p class="font-italic">Vous n'avez pas de compte ? <a href="{{ path("register") }}">Inscrivez-vous</a> dès maintenant.</p>
     <label for="inputEmail">Votre adresse email :</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus placeholder="example@gmail.com">
     <label for="inputPassword" class="mt-3">Votre mot de passe :</label>
