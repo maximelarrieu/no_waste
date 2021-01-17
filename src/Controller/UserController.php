@@ -22,6 +22,7 @@ class UserController extends AbstractController
     {
         $user ??= $this->getUser();
         $business = $user->getBusiness();
+        $commands = $user->getCommands();
 
         if ( ! $user) {
             return $this->redirectToRoute('login');
@@ -30,7 +31,7 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'business' => $business,
-            'controller_name' => 'UserController',
+            'commands' => $commands
         ]);
     }
 
