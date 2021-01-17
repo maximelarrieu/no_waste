@@ -51,6 +51,7 @@ class SecurityController extends AbstractController
                 )
             );
             $user->setBalance(50);
+            $user->setCreatedAt(new \DateTime());
             $manager->persist($user);
             $manager->flush();
 
