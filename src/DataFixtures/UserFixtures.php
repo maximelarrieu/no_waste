@@ -33,6 +33,7 @@ class UserFixtures extends Fixture
             $user->setLastname($faker->lastName);
             $user->setBalance(50.00);
             $user->setPassword($password);
+            $user->setCreatedAt($faker->dateTime);
             $user->setCart($cart);
             $this->addReference('user'.$u, $user);
             $manager->persist($user);
@@ -44,6 +45,7 @@ class UserFixtures extends Fixture
         $admin->setLastname('admin');
         $admin->setBalance(2000.00);
         $admin->setPassword($adminpaswword);
+        $admin->setCreatedAt(new \DateTime());
         $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
