@@ -70,10 +70,16 @@ class Commodity implements \Serializable
      */
     private $carts;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Command::class, mappedBy="commodity")
+     */
+    private $commands;
+
     public function __construct()
     {
         $this->business = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->commands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,6 +240,33 @@ class Commodity implements \Serializable
     {
         if ($this->carts->removeElement($cart)) {
             $cart->removeCommodity($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Command[]
+     */
+    public function getCommands(): Collection
+    {
+        return $this->commands;
+    }
+
+    public function addCommand(Command $command): self
+    {
+        if (!$this->commands->contains($command)) {
+            $this->commands[] = $command;
+            $command->addCommodity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommand(Command $command): self
+    {
+        if ($this->commands->removeElement($command)) {
+            $command->removeCommodity($this);
         }
 
         return $this;
