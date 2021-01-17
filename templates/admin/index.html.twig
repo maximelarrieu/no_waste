@@ -1,20 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}{{ parent() }} Dashboard{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/mlarrieu/Ynov/B3/Symfony/no_waste/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <h1 class="mb-4">DASHBOARD</h1>
+    <div class="row">
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-primary">
+                {% if stats.users > 1 %}
+                    <h5 class="text-center mb-3">UTILISATEURS INSCRITS</h5>
+                {% else %}
+                    <h5 class="text-center mb-2">UTILISATEUR INSCRIT</h5>
+                {% endif %}
+                    <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.users }}</p>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-danger">
+                {% if stats.users > 1 %}
+                    <h5 class="text-center mb-3">UTILISATEURS INSCRITS <br> (7 derniers jours)</h5>
+                {% else %}
+                    <h5 class="text-center mb-2">UTILISATEUR INSCRIT <br> (7 derniers jours)</h5>
+                {% endif %}
+                <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.recents_users }}</p>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-warning">
+                {% if stats.commands > 1 %}
+                    <h5 class="text-center mb-3">COMMANDES EFFECTUÉES</h5>
+                {% else %}
+                    <h5 class="text-center mb-2">COMMANDE EFFECTUÉE</h5>
+                {% endif %}
+                <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.commands }}</p>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-success">
+                {% if stats.commands > 1 %}
+                    <h5 class="text-center mb-3">COMMANDES EFFECTUÉES<br> (7 derniers jours)</h5>
+                {% else %}
+                    <h5 class="text-center mb-2">COMMANDE EFFECTUÉE<br> (7 derniers jours)</h5>
+                {% endif %}
+                <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.recents_commands }}</p>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-primary">
+                <h5 class="text-center mb-3">CHIFFRE D'AFFAIRE</h5>
+                <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.totaux }} €</p>
+            </div>
+        </div>
+        <div class="col col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="alert alert-secondary">
+                <h5 class="text-center mb-3">CHIFFRE D'AFFAIRE<br> (7 derniers jours)</h5>
+                <p class="text-center" style="font-size: 23px; font-weight: bold">{{ stats.recents_totaux }} €</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}
