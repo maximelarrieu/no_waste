@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Commande {{ command.nbCommand }}{% endblock %}
+
+{% block body %}
+    <div class="m-4">
+        <h1>Récapitulatif de la commande N°{{ command.nbCommand }}</h1>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Produit</th>
+                    <th scope="col">Commerce</th>
+                    <th scope="col">Prix</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in command.commodity %}
+                <tr>
+                    <th scope="row">{{ product.title }}</th>
+                    {% for business in product.business %}
+                    <td>{{ business.name }}</td>
+                    {% endfor %}
+                    <td>{{ product.price }} €</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            Total de la commande : {{ command.total }} €
+        </div>
+    </div>
+
+{% endblock %}
