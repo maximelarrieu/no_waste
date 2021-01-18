@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{parent()}} Commerces{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>LES COMMERCES</h2>
+        <a href="{{ path('admin_business_add') }}" class="btn btn-success"><i class="fas fa-plus mr-2"></i>Ajouter un commerce</a>
+        <div class="table-responsive mt-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Commerçant</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for b in business %}
+                    <tr>
+                        <th scope="row">{{ b.id }}</th>
+                        <td>{{ b.name }}</td>
+                        <td>{{ b.user.firstname }} {{ b.user.lastname }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{ path('admin_business_details', {id: b.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                <a href="{{ path('admin_business_edit', {id: b.id}) }}" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                                <a href="{{ path('admin_business_remove', {id: b.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
