@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Command;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,15 @@ class CommandRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Command::class);
+    }
+
+    public function getCommandsByUser(User $user) {
+        return $this->createQueryBuilder('command')
+            ->innerJoin('command.user', "user")
+            ->where('user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**
