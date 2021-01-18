@@ -45,6 +45,7 @@ ADMINISTRATION :
 
 + Il se peut que les fixtures ne passent pas au premier lancement, cause d'une mauvaise relation entre les entités. Deux ou trois tentatives devraient suffire.
 + Mise en place de mails mensuels aux gérants générant un récapitulatif du chiffre d'affaire du mois.
++ Gestion des stocks non mise en place.
 
 ### Nota bene
 Le serveur mail mis en place est fait avec GMail.
