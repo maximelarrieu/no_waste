@@ -84,11 +84,10 @@ class CommodityController extends AbstractController
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function remove(Commodity $commodity, EntityManagerInterface $manager): Response {
+
         $manager->remove($commodity);
         $manager->flush();
 
-        return $this->redirectToRoute('business_details', [
-            'id' => $commodity->getBusiness()
-        ]);
+        return $this->redirectToRoute('profile');
     }
 }
