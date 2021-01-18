@@ -1,0 +1,31 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ parent() }} Commande de l'utilisateur {{ user.id }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>COMMANDES DE L'UTILISATEUR {{ user.firstname }} {{ user.lastname }}</h2>
+        <div class="table-responsive mt-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Numéro de commande</th>
+                    <th scope="col">Date de commande</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for command in commands %}
+                    <tr>
+                        <th scope="row">{{ command.id }}</th>
+                        <td>{{ command.nbCommand }}</td>
+                        <td>{{ command.createdAt|date('d-m-Y') }}</td>
+                        <td>{{ command.total }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
