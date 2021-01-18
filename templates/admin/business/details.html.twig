@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <div class="border radius mb-3">
+        <div class="radius mb-3">
             <img class="" src="{{ business.image ? vich_uploader_asset(business, 'imageFile') : 'http://placehold.it/300x100' }}" alt="Commerce image" style="width: 100%; height: 150px">
             <h4>{{ business.name }}</h4>
             <i>{{ business.address }}<br></i>
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="border radius">
+    <div class="radius">
         {% include '/incs/commodity-list.html.twig' %}
     </div>
 {% endblock %}

@@ -15,7 +15,7 @@
 
 
     <div class="row m-4">
-        <div class="col col-sm-12 col-md-5 col-lg-3 border radius" style="height: 100%">
+        <div class="col col-sm-12 col-md-5 col-lg-3 radius" style="height: 100%">
             <h2 class="my-3">COMMERCES</h2>
             <ul class="list-group">
                 {% for b in business_repo.findAll() %}
@@ -23,7 +23,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col col-sm-12 col-md-7 col-lg-9 border radius">
+        <div class="col col-sm-12 col-md-7 col-lg-9 radius">
             {% block body %}
             {% endblock %}
         </div>
